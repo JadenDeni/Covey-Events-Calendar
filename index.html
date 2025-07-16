@@ -19,31 +19,60 @@
 
     .buttons {
       margin-bottom: 30px;
+      display: inline-flex;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    .buttons a, .buttons span {
+      display: inline-block;
     }
 
     button, .apple-link {
       padding: 12px 20px;
       font-size: 16px;
-      margin: 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      display: inline-block;
+      border: none;
       cursor: pointer;
+      color: white;
+      background-color: transparent;
+      font-weight: 600;
+      min-width: 140px;
+      user-select: none;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      border-radius: 0;
     }
 
+    /* Individual button colors */
     .google {
       background-color: #34A853;
-      border: none;
     }
 
-    .outlook {
+    .outlook-button {
       background-color: #0078D4;
-      border: none;
+      width: 140px;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+      box-sizing: border-box;
     }
 
     .apple-link {
       background-color: #000;
+    }
+
+    /* Wrappers to add vertical lines between buttons */
+    .buttons a:not(:last-child), .buttons span:not(:last-child) {
+      border-right: 1px solid #ddd;
+    }
+
+    /* Outlook container to handle lines */
+    .outlook-wrapper {
+      display: inline-block;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
     }
 
     .instructions {
@@ -55,17 +84,24 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     code {
       background: #eee;
       padding: 4px 6px;
       border-radius: 4px;
-      display: inline-block;
+      display: block;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      font-family: monospace;
+      margin-bottom: 10px;
     }
 
     .copy-btn {
-      margin-top: 10px;
       background-color: #0078D4;
       color: white;
       border: none;
@@ -80,17 +116,17 @@
 
   <div class="buttons">
     <!-- Google Calendar -->
-    <a href="https://calendar.google.com/calendar/u/0/r?cid=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
-" target="_blank">
-      <button class="google">Google Calendar</button>
+    <a href="https://calendar.google.com/calendar/u/0/r?cid=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com" target="_blank" class="google">
+      Google Calendar
     </a>
 
-    <!-- Outlook Instructions -->
-    <button class="outlook" onclick="toggleInstructions()">Outlook</button>
+    <!-- Outlook Instructions wrapped in span for borders -->
+    <span class="outlook-wrapper">
+      <button class="outlook-button" onclick="toggleInstructions()">Outlook</button>
+    </span>
 
     <!-- Apple Calendar -->
-    <a href="webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
-/public/basic.ics" class="apple-link">
+    <a href="#" id="appleLink" class="apple-link">
       Apple Calendar
     </a>
   </div>
@@ -103,14 +139,25 @@
       <li>Go to <strong>File → Account Settings → Account Settings</strong>.</li>
       <li>Click the <strong>Internet Calendars</strong> tab.</li>
       <li>Click <strong>New</strong> and paste this link:</li>
-      <code id="icsLink">https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
-/public/basic.ics</code><br>
+      <code id="icsLink">https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics</code>
       <button class="copy-btn" onclick="copyToClipboard()">Copy Link</button>
       <li>Click <strong>Add</strong>, then <strong>Close</strong>.</li>
     </ol>
   </div>
 
   <script>
+    const appleMobileLink = "webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics";
+    const appleDesktopLink = "https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics";
+
+    function isMobile() {
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+
+    // Set Apple Calendar link based on device
+    const appleLink = document.getElementById('appleLink');
+    appleLink.href = isMobile() ? appleMobileLink : appleDesktopLink;
+    appleLink.textContent = isMobile() ? "Apple Calendar (Mobile)" : "Apple Calendar (Desktop)";
+
     function toggleInstructions() {
       const box = document.getElementById('outlookInstructions');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
@@ -118,8 +165,11 @@
 
     function copyToClipboard() {
       const text = document.getElementById('icsLink').innerText;
-      navigator.clipboard.writeText(text);
-      alert('ICS link copied to clipboard!');
+      navigator.clipboard.writeText(text).then(() => {
+        alert('ICS link copied to clipboard!');
+      }, () => {
+        alert('Failed to copy ICS link.');
+      });
     }
   </script>
 </body>
