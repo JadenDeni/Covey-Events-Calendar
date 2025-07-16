@@ -24,29 +24,26 @@
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       background: white;
+      user-select: none;
     }
 
     .buttons a, .buttons span {
       display: inline-block;
-    }
-
-    button, .apple-link {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      color: white;
-      background-color: transparent;
-      font-weight: 600;
-      min-width: 140px;
-      user-select: none;
       text-decoration: none;
-      display: inline-block;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      min-width: 140px;
+      padding: 12px 20px;
+      line-height: 1.2;
       text-align: center;
-      border-radius: 0;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      box-sizing: border-box;
     }
 
-    /* Individual button colors */
+    /* Buttons colors */
     .google {
       background-color: #34A853;
     }
@@ -59,16 +56,22 @@
       box-sizing: border-box;
     }
 
-    .apple-link {
+    .apple-mobile {
       background-color: #000;
+      border-left: 1px solid #ddd;
     }
 
-    /* Wrappers to add vertical lines between buttons */
+    .apple-desktop {
+      background-color: #000;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+    }
+
+    /* Borders between buttons */
     .buttons a:not(:last-child), .buttons span:not(:last-child) {
       border-right: 1px solid #ddd;
     }
 
-    /* Outlook container to handle lines */
     .outlook-wrapper {
       display: inline-block;
       border-left: 1px solid #ddd;
@@ -116,7 +119,7 @@
 
   <div class="buttons">
     <!-- Google Calendar -->
-    <a href="https://calendar.google.com/calendar/u/0/r?cid=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com" target="_blank" class="google">
+    <a href="https://calendar.google.com/calendar/u/0/r?cid=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com" target="_blank" class="google" rel="noopener noreferrer">
       Google Calendar
     </a>
 
@@ -125,9 +128,14 @@
       <button class="outlook-button" onclick="toggleInstructions()">Outlook</button>
     </span>
 
-    <!-- Apple Calendar -->
-    <a href="#" id="appleLink" class="apple-link">
-      Apple Calendar
+    <!-- Apple Mobile -->
+    <a href="webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics" class="apple-mobile" rel="noopener noreferrer">
+      Apple Calendar (Mobile)
+    </a>
+
+    <!-- Apple Desktop -->
+    <a href="https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics" class="apple-desktop" target="_blank" rel="noopener noreferrer">
+      Apple Calendar (Desktop)
     </a>
   </div>
 
@@ -146,18 +154,6 @@
   </div>
 
   <script>
-    const appleMobileLink = "webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics";
-    const appleDesktopLink = "https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics";
-
-    function isMobile() {
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-
-    // Set Apple Calendar link based on device
-    const appleLink = document.getElementById('appleLink');
-    appleLink.href = isMobile() ? appleMobileLink : appleDesktopLink;
-    appleLink.textContent = isMobile() ? "Apple Calendar (Mobile)" : "Apple Calendar (Desktop)";
-
     function toggleInstructions() {
       const box = document.getElementById('outlookInstructions');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
