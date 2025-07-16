@@ -69,33 +69,14 @@
       <button class="google">Add to Google Calendar</button>
     </a>
 
-    <!-- Apple Calendar -->
-    <button class="apple" onclick="showAppleInstructions()">Subscribe in Apple Calendar</button>
+    <!-- Apple Calendar with webcal:// -->
+    <a href="webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
+/public/basic.ics">
+      <button class="apple">Subscribe in Apple Calendar</button>
+    </a>
 
     <!-- Microsoft Outlook -->
     <button class="outlook" onclick="showOutlookInstructions()">Subscribe in Microsoft Outlook</button>
-  </div>
-
-  <!-- Apple Instructions -->
-  <div class="instructions" id="appleInstructions">
-    <h2>Subscribe in Apple Calendar</h2>
-    <p><strong>On iPhone or iPad:</strong></p>
-    <ol>
-      <li>Go to <strong>Settings → Calendar → Accounts → Add Account</strong></li>
-      <li>Tap <strong>Other</strong> → <strong>Add Subscribed Calendar</strong></li>
-      <li>Paste this link:</li>
-      <code id="appleIcs">https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
-/public/basic.ics</code><br>
-      <button class="copy-btn" onclick="copyAppleLink()">📋 Copy Link</button>
-      <li>Tap <strong>Next</strong>, then <strong>Save</strong>.</li>
-    </ol>
-
-    <p><strong>On Mac:</strong></p>
-    <ol>
-      <li>Open the <strong>Calendar</strong> app</li>
-      <li>Click <strong>File → New Calendar Subscription</strong></li>
-      <li>Paste the same link above and click <strong>Subscribe</strong></li>
-    </ol>
   </div>
 
   <!-- Outlook Instructions -->
@@ -117,19 +98,8 @@
   </div>
 
   <script>
-    function showAppleInstructions() {
-      document.getElementById('appleInstructions').style.display = 'block';
-    }
-
     function showOutlookInstructions() {
       document.getElementById('outlookInstructions').style.display = 'block';
-    }
-
-    function copyAppleLink() {
-      const appleLink = document.getElementById('appleIcs').textContent;
-      navigator.clipboard.writeText(appleLink)
-        .then(() => alert("Apple calendar link copied!"))
-        .catch(err => alert("Copy failed: " + err));
     }
 
     function copyOutlookLink() {
