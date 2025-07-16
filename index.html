@@ -7,21 +7,16 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 30px;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      font-size: 2em;
+      padding: 40px;
+      background-color: #f2f2f2;
       color: #333;
     }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      margin: 30px 0;
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 40px;
     }
     .buttons {
-      margin: 20px auto;
+      margin-bottom: 30px;
     }
     button {
       padding: 12px 20px;
@@ -29,31 +24,43 @@
       margin: 10px;
       border: none;
       border-radius: 6px;
-      background-color: #0078D4;
-      color: white;
       cursor: pointer;
+      color: white;
     }
-    button.google {
-      background-color: #34A853;
-    }
-    button.apple {
-      background-color: #000;
-    }
-    button.outlook {
-      background-color: #0078D4;
+    .google { background-color: #34A853; }
+    .apple { background-color: #000; }
+    .outlook { background-color: #0078D4; }
+    .instructions {
+      max-width: 600px;
+      margin: 30px auto;
+      text-align: left;
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     code {
       background: #eee;
-      padding: 5px 10px;
-      border-radius: 5px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      word-break: break-all;
+    }
+    .copy-btn {
+      margin-top: 10px;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Covey Events Calendar</h1>
 
-  <!-- Embedded Google Calendar -->
-  <iframe src="https://calendar.google.com/calendar/embed?src=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com&ctz=America%2FDenver"></iframe>
+  <h1>Covey Events Calendar</h1>
 
   <div class="buttons">
     <!-- Google Calendar -->
@@ -66,22 +73,39 @@
       <button class="apple">Add to Apple Calendar</button>
     </a>
 
-    <!-- Microsoft Outlook (opens Outlook Web Calendar) -->
-    <a href="https://outlook.office.com/calendar/addcalendar" target="_blank">
-      <button class="outlook">Add to Microsoft Outlook</button>
-    </a>
+    <!-- Outlook Calendar -->
+    <button class="outlook" onclick="showInstructions()">Add to Microsoft Outlook</button>
   </div>
 
-  <h2>Instructions for Microsoft Outlook</h2>
-  <p>To subscribe to this calendar and receive automatic updates:</p>
-  <ol style="text-align: left; max-width: 600px; margin: 0 auto;">
-    <li>Click the <strong>"Add to Microsoft Outlook"</strong> button above.</li>
-    <li>Choose <strong>“Subscribe from web”</strong>.</li>
-    <li>Paste this link into the field:</li>
-    <pre><code id="icsLink">https://calendar.google.com/calendar/ical/YOUR_GOOGLE_CALENDAR_ID/public/basic.ics</code></pre>
-    <button onclick="navigator.clipboard.writeText(document.getElementById('icsLink').textContent)">📋 Copy Link</button>
-    <li>Name the calendar and click <strong>Import</strong>.</li>
-  </ol>
+  <!-- Outlook Instructions -->
+  <div class="instructions" id="outlookInstructions">
+    <h2>Subscribe in Microsoft Outlook</h2>
+    <ol>
+      <li>Click this link to open Outlook web calendar:  
+        <a href="https://outlook.office.com/calendar/addcalendar" target="_blank">
+          <strong>Add Calendar Page</strong>
+        </a>
+      </li>
+      <li>Select <strong>“Subscribe from web”</strong>.</li>
+      <li>Paste this calendar URL:</li>
+      <code id="icsLink">https://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics</code><br>
+      <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+      <li>Name the calendar and click <strong>Import</strong>.</li>
+    </ol>
+  </div>
+
+  <script>
+    function showInstructions() {
+      document.getElementById('outlookInstructions').style.display = 'block';
+    }
+
+    function copyLink() {
+      const linkText = document.getElementById('icsLink').textContent;
+      navigator.clipboard.writeText(linkText)
+        .then(() => alert("ICS link copied to clipboard!"))
+        .catch(err => alert("Copy failed: " + err));
+    }
+  </script>
+
 </body>
 </html>
-
