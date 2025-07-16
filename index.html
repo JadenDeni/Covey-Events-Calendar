@@ -56,6 +56,18 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    .apple-link {
+      display: inline-block;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: #000;
+      color: white;
+      text-decoration: none;
+    }
+
   </style>
 </head>
 <body>
@@ -66,14 +78,14 @@
     <!-- Google Calendar -->
     <a href="https://calendar.google.com/calendar/render?cid=4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
 " target="_blank">
-      <button class="google">Add to Google Calendar</button>
+      <button class="google">Google Calendar</button>
     </a>
 
     <!-- Apple Calendar with webcal:// -->
-    <a href="webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com
-/public/basic.ics">
-      <button class="apple">Subscribe in Apple Calendar</button>
-    </a>
+    <a href="webcal://calendar.google.com/calendar/ical/4cd53d59f793789ccaabf89908848aebd91dc61d6e64b073c1779499d3eea40f@group.calendar.google.com/public/basic.ics" class="apple-link">
+  Apple Calendar
+</a>
+
 
     <!-- Microsoft Outlook -->
     <button class="outlook" onclick="showOutlookInstructions()">Subscribe in Microsoft Outlook</button>
@@ -81,7 +93,7 @@
 
   <!-- Outlook Instructions -->
   <div class="instructions" id="outlookInstructions">
-    <h2>Subscribe in Microsoft Outlook</h2>
+    <h2>Outlook</h2>
     <ol>
       <li>Click this link to open Outlook Web Calendar:  
         <a href="https://outlook.office.com/calendar/addcalendar" target="_blank">
